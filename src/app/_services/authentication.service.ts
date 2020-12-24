@@ -40,7 +40,8 @@ export class AuthenticationService {
         let currentUser = JSON.parse(localStorage.getItem('currentUser'));
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
-        return this.http.get(`${config.apiUrl}/users/logout/${currentUser._id}`);
+        if (currentUser)
+            return this.http.get(`${config.apiUrl}/users/logout/${currentUser._id}`);
     }
 
     getIpAddress() {
