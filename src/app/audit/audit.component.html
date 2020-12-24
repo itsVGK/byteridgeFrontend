@@ -1,7 +1,26 @@
 <h1>Auditor</h1>
-<ul>
-    <li *ngFor="let user of users">
-        {{user.username}} {{user.role}} {{user.loginTime}}  {{user.logoffTime}}
-        - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
-    </li>
-</ul>
+
+<table class="table" *ngIf='users'>
+    <thead class="thead-light">
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Role</th>
+            <th scope="col">Logged In</th>
+            <th scope="col">Logged Out</th>
+        </tr>
+    </thead>
+    <tbody>
+        <ng-container *ngFor="let user of userPage">
+            <tr>
+                <td>{{user.firstName}} {{user.lastName}}</td>
+                <td>{{user.role}}</td>
+                <td>{{user.loginTime | date:'dd-MMM-yyyy HH:mm:SS'}}</td>
+                <td>{{user.logoutTime | date:'short'}}</td>
+            </tr>
+        </ng-container>
+
+    </tbody>
+</table>
+
+<ng-pagination [position]="'left'" [pageSize]="5" [itemsCount]="users && users.length" [data]="users"
+    (getPageData)="getPageData($event)"></ng-pagination>

@@ -6,6 +6,7 @@ import { first } from 'rxjs/operators';
 export class AuditComponent implements OnInit {
 
     public users;
+    public userPage;
 
     constructor(
         private userService: UserService
@@ -19,7 +20,12 @@ export class AuditComponent implements OnInit {
     private loadAllUsers() {
         this.userService.getAll().pipe(first()).subscribe(users => {
             this.users = users;
+            this.userPage = users;
         });
+    }
+
+    getPageData(data) {
+        this.userPage=data.data;
     }
 
 }

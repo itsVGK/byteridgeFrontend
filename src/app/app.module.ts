@@ -15,12 +15,14 @@ import { HomeComponent } from './home';
 import { LoginComponent } from './login';
 import { RegisterComponent } from './register';
 import { AuditComponent } from './audit';
+import { PaginationModule } from 'ngx-pagination-bootstrap'
 
 @NgModule({
     imports: [
         BrowserModule,
         ReactiveFormsModule,
         HttpClientModule,
+        PaginationModule,
         routing
     ],
     declarations: [
