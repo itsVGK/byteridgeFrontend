@@ -1,0 +1,7 @@
+<h1>Auditor</h1>
+<ul>
+    <li *ngFor="let user of users">
+        {{user.username}} {{user.role}} {{user.loginTime}}  {{user.logoffTime}}
+        - <a (click)="deleteUser(user.id)" class="text-danger">Delete</a>
+    </li>
+</ul>
