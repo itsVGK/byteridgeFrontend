@@ -20,9 +20,9 @@ export class AuthenticationService {
         return this.currentUserSubject.value;
     }
 
-    login(username: string, password: string, clientIp = this.clientIp) {
+    login(username: string, password: string, clientIp = this.clientIp, loginTime = Date.now(), logoutTime = null) {
 
-        return this.http.post<any>(`${config.apiUrl}/users/authenticate`, { username, password, clientIp })
+        return this.http.post<any>(`${config.apiUrl}/users/authenticate`, { username, password, clientIp, loginTime, logoutTime })
             .pipe(map(user => {
                 // login successful if there's a jwt token in the response
                 if (user && user.token) {
@@ -35,13 +35,14 @@ export class AuthenticationService {
             }));
     }
 
-    logout() {
+    logout(logoutTime = Date.now()) {
         // remove user from local storage to log user out
-        let currentUser = JSON.parse(localStorage.getItem('currentUser'));
+        let username = JSON.parse(localStorage.getItem('currentUser')).username;
         localStorage.removeItem('currentUser');
         this.currentUserSubject.next(null);
-        if (currentUser)
-            return this.http.get(`${config.apiUrl}/users/logout/${currentUser._id}`);
+        if (username)
+            return this.http.post<any>(`${config.apiUrl}/users/authenticate`, { username, logoutTime });
+
     }
 
     getIpAddress() {

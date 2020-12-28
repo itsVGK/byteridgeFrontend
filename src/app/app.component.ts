@@ -20,7 +20,8 @@ export class AppComponent {
         this.authenticationService.logout()
             .pipe()
             .subscribe(
-                data => {
+                (data: any) => {
+                    this.alertService.success(data.message)
                 },
                 error => {
                     this.alertService.error(error);
